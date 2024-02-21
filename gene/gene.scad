@@ -33,7 +33,7 @@ translate([0,0, base_h+     10]){
     translate([diff_x, diff_y, diff_z])
     cup(h2, d2, wall, bottom, center_hole_size, hole_size, nr_of_holes);
 }
-base();
+!base();
 
 //difference(){
 //
@@ -75,20 +75,34 @@ module holes(chs, hs, nh, dd){
 
 module base(){
     
-    off=4;
+    off=wall;
     
     // Base
+//    difference(){
+//        hull(){
+//            translate([-off, 0, 0])
+//            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+off, $fn = res);
+//            translate([diff_x+off, diff_y, diff_z])
+//            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+off, $fn = res);
+//        }
+//        hull(){
+//            translate([-off, 0, bottom])
+//            cylinder(h = base_h, d = (d1>d2?d1:d2), $fn = res);
+//            translate([diff_x+off, diff_y, diff_z+bottom])
+//            cylinder(h = base_h, d = (d1>d2?d1:d2), $fn = res);
+//        }
+    
     difference(){
         hull(){
-            translate([-off, 0, 0])
-            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+off, $fn = res);
-            translate([diff_x+off, diff_y, diff_z])
-            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+off, $fn = res);
+            translate([0, 0, 0])
+            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+wall, $fn = res);
+            translate([diff_x, diff_y, diff_z])
+            cylinder(h = base_h, d = (d1>d2?d1:d2)+wall+wall, $fn = res);
         }
         hull(){
-            translate([-off, 0, bottom])
+            translate([0, 0, bottom])
             cylinder(h = base_h, d = (d1>d2?d1:d2)+wall, $fn = res);
-            translate([diff_x+off, diff_y, diff_z+bottom])
+            translate([diff_x, diff_y, diff_z+bottom])
             cylinder(h = base_h, d = (d1>d2?d1:d2)+wall, $fn = res);
         }
     }
@@ -132,7 +146,7 @@ module pole(){
     union(){
         cylinder(h=pole_h, d=pole_w, $fn=res);
         hull(){
-            translate([0,0,base_h-10])
+            translate([0,0,base_h-20])
             cylinder(h=1, d=pole_w, $fn=res);
             cylinder(h=1, d=pole_w+20, $fn=res);
         }
